@@ -54,8 +54,8 @@ window.phoneLibrary = [];
            load.then((array)=>{
                 const inputGroup = buildInputGroup(input);
                 inputGroup.find('.dropdown-item').on('click', function(){
-                    const phoneCode = $(this).text().trim().split('+')[1];
-                    inputGroup.find('.btn').text('+' + phoneCode);
+                    const phoneCode = $(this).html()
+                    inputGroup.find('.btn').html( phoneCode);
                 });
             });
             return input;
