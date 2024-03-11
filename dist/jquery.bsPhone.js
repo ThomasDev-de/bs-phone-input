@@ -12,7 +12,8 @@ window.phoneLibrary = [];
         }
         let list = [];
         window.phoneLibrary.forEach(el => {
-            list.push(`<li><a class="dropdown-item" title="${el.country}" href="#"><img src="${el.flag}" style="width: 20px"> +${el.phoneCode}</a></li>`);
+            const activeClass = el.default ? 'active' : '';
+            list.push(`<li><a class="dropdown-item ${activeClass}" title="${el.country}" href="#"><img src="${el.flag}" style="width: 20px"> +${el.phoneCode}</a></li>`);
         })
 
         const inputGroup = $(`
@@ -82,11 +83,9 @@ window.phoneLibrary = [];
     async function loadLibrary(callback) {
 
         $.getJSON('/dist/countries.json', function (array) {
-
             array.forEach(country => {
                 const isoToLower = country.isoCode.toLowerCase();
                 country.default = defaultCountry === isoToLower;
-                // console.log('/dist/flags/'+country.isoCode.toLowerCase()+'.svg');
                 country.flag = '/dist/flags/' + isoToLower + '.svg';
             })
             array.sort(sortIsoCodes);
