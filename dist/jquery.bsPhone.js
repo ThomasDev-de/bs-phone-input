@@ -307,8 +307,8 @@ window.phoneLibrary = [];
 
 
     async function loadLibrary(callback) {
-
-        $.getJSON('countries.json', function (array) {
+        const path = '/vendor/webcito/bs-phone-input/dist/'
+        $.getJSON(path+'countries.json', function (array) {
             array.forEach(country => {
                 let isoToLower = country.isoCode.toLowerCase();
                 country.default = defaultCountry === isoToLower;
@@ -316,7 +316,7 @@ window.phoneLibrary = [];
                     isoToLower = 'nl';
                 if(isoToLower === 'uk')
                     isoToLower = 'sh';
-                country.flag = 'flags/' + isoToLower + '.svg';
+                country.flag = path+'flags/' + isoToLower + '.svg';
             })
             array.sort(sortIsoCodes);
             console.log('library loaded new');
