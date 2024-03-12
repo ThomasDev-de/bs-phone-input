@@ -308,7 +308,7 @@ window.phoneLibrary = [];
 
     async function loadLibrary(callback) {
 
-        $.getJSON('/dist/countries.json', function (array) {
+        $.getJSON('../dist/countries.json', function (array) {
             array.forEach(country => {
                 let isoToLower = country.isoCode.toLowerCase();
                 country.default = defaultCountry === isoToLower;
@@ -316,7 +316,7 @@ window.phoneLibrary = [];
                     isoToLower = 'nl';
                 if(isoToLower === 'uk')
                     isoToLower = 'sh';
-                country.flag = '/dist/flags/' + isoToLower + '.svg';
+                country.flag = '../dist/flags/' + isoToLower + '.svg';
             })
             array.sort(sortIsoCodes);
             console.log('library loaded new');
