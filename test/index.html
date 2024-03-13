@@ -10,20 +10,20 @@
 <div style="width: 400px" class="container my-5">
 <h1>Bootstrap jQuery Phone Input</h1>
 
-<input type="tel" class="form-control" id="input_1">
-<input type="tel" class="form-control" value="+49123456789" id="input_2">
-<input type="tel" class="form-control" id="input_3">
+<input type="tel" class="form-control" id="input_1" data-bs-toggle="phone">
+<input type="tel" class="form-control" value="+49123456789" id="input_2"  data-bs-toggle="phone">
+<input type="tel" class="form-control" id="input_3"  data-bs-toggle="phone" data-default="at">
 </div>
 <script src="../vendor/components/jquery/jquery.min.js"></script>
 <script src="../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../dist/jquery.bsPhone.js"></script>
 <script>
-    $('[type="tel"]').bsPhone();
-    setTimeout(function(){
-        $('[type="tel"]:first').bsPhone('val', '290111111111');
-        $('[type="tel"]:eq(1)').bsPhone('val', '+49111111111');
-        $('[type="tel"]:eq(2)').bsPhone('val', '+81111111111');
-    },0)
+    // $('[type="tel"]').bsPhone();
+    // setTimeout(function(){
+    //     $('[type="tel"]:first').bsPhone('val', '290111111111');
+    //     $('[type="tel"]:eq(1)').bsPhone('val', '+49111111111');
+    //     $('[type="tel"]:eq(2)').bsPhone('val', '+81111111111');
+    // },0)
 </script>
 </body>
 </html>
