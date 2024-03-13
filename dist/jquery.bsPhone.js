@@ -2141,6 +2141,7 @@
             limitedCountries: [],
             wrapperClasses: 'mb-3',
             dropDownClasses: 'btn btn-outline-secondary',
+            dropDownMaxHeight: '50vh',
             inputClasses: 'border-secondary rounded-end',
             formatValue(phoneCode, value = '') {
                 return '+' + phoneCode + value;
@@ -2183,15 +2184,19 @@
         }).appendTo(inputGroup);
 
         const dropDownMenu = $('<div>', {
-            class: 'dropdown-menu overflow-y-auto py-0',
-            css: {
-                maxHeight: '50vh'
-            }
+            class: 'dropdown-menu py-0',
         }).appendTo(inputGroup);
 
         const dropDownHeader = $('<div>', {
-            class: 'dropdown-header sticky-top text-bg-light z-1 p-2 border-bottom',
+            class: 'dropdown-header sticky-top  z-1 p-2 border-bottom',
             html: '<input type="search" class="form-control form-control-sm">'
+        }).appendTo(dropDownMenu);
+
+        const menuContainer = $('<div>', {
+            class: 'dropdown-body overflow-y-auto',
+            css: {
+                maxHeight: settings.dropDownMaxHeight
+            }
         }).appendTo(dropDownMenu);
 
         const allCountries = !settings.limitedCountries.length;
@@ -2202,14 +2207,17 @@
             const activeClass = settings.default.toUpperCase() === el.isoCode.toUpperCase() ? 'Y' : 'N';
             // console.log(el)
             const a = $('<a>', {
-                class: 'dropdown-item',
-                html: `<img src="${el.flagBase64}" style="width: 20px"> +${el.phoneCode}`,
+                class: 'dropdown-item d-flex align-items-center',
+                html: `<img src="${el.flagBase64}" style="width: 20px" class="me-2"> <small class="text-end" style="width: 30px">+${el.phoneCode}</small>`,
                 'data-iso-code': el.isoCode,
                 'data-selected': activeClass,
                 'data-phone-code': el.phoneCode,
+                'data-bs-toggle': 'tooltip',
+                'data-bs-placement': "end",
                 title: el.country,
                 href: '#'
-            }).appendTo(dropDownMenu)
+            }).appendTo(menuContainer);
+
         });
 
 
@@ -2288,7 +2296,7 @@
                     setup = $.extend({}, $.bsPhone.getDefaults(), input.data(), optionsOrMethod || {});
                 }
                 input.data('options', setup);
-                buildInputGroup(input);
+                const wrapper = buildInputGroup(input);
                 events(input);
                 setDropDownSelected(input);
                 input.data('initBsPhone', true);
@@ -2355,7 +2363,6 @@
 
         wrapper
             .on('shown.bs.dropdown', '.dropdown-toggle', function () {
-
                 wrapper.find('[type="search"]').val('').trigger('keyup').focus();
             })
             .on('click', '.dropdown-item', function () {
@@ -2370,11 +2377,14 @@
                 if (searchPattern !== '') {
                     searchElements.each(function (index, value) {
 
+                        let currentPhoneCode = $(value).data('phoneCode')+'';
                         let currentName = $(value).data('isoCode');
                         let currentCountry = $(value).attr('title');
                         if (
                             currentName.toUpperCase().indexOf(searchPattern.toUpperCase()) > -1 ||
-                            currentCountry.toUpperCase().indexOf(searchPattern.toUpperCase()) > -1
+                            currentCountry.toUpperCase().indexOf(searchPattern.toUpperCase()) > -1 ||
+                            currentPhoneCode.startsWith(searchPattern) ||
+                            ('+'+currentPhoneCode).startsWith(searchPattern)
                         ) {
                             $(value).removeClass('d-none');
                         } else {
