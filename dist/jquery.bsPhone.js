@@ -2199,7 +2199,7 @@
 
         const allCountries = !settings.limitedCountries.length;
         countries.forEach(el => {
-            if (! allCountries && !settings.limitedCountries.includes(el.isoCode.toLowerCase())){
+            if (!allCountries && !settings.limitedCountries.includes(el.isoCode.toLowerCase())) {
                 return false;
             }
             const activeClass = settings.default.toUpperCase() === el.isoCode.toUpperCase() ? 'Y' : 'N';
@@ -2260,7 +2260,7 @@
      * @param {null|string|object}optionsOrMethod
      * @return {*|jQuery|HTMLElement}
      */
-    $.fn.bsPhone = function (optionsOrMethod = null, param = 'undefined') {
+    $.fn.bsPhone = function (optionsOrMethod = null, param) {
 
         if ($(this).length > 1) {
             return $(this).each(function (i, e) {
@@ -2308,17 +2308,24 @@
         }
 
         init();
+
         if (callMethod) {
             switch (optionsOrMethod) {
                 case 'val':
-                    if (typeof param === 'undefined')
+                    if (!param && param !== null){
                         return input.val();
-                    setVal(input, param);
+                    }
+                    else {
+                        setVal(input, param);
+
+                    }
             }
+        }else{
+            return input;
         }
 
 
-        return input;
+
     }
 
     function setVal($input, value) {
@@ -2377,14 +2384,14 @@
                 if (searchPattern !== '') {
                     searchElements.each(function (index, value) {
 
-                        let currentPhoneCode = $(value).data('phoneCode')+'';
+                        let currentPhoneCode = $(value).data('phoneCode') + '';
                         let currentName = $(value).data('isoCode');
                         let currentCountry = $(value).attr('title');
                         if (
                             currentName.toUpperCase().indexOf(searchPattern.toUpperCase()) > -1 ||
                             currentCountry.toUpperCase().indexOf(searchPattern.toUpperCase()) > -1 ||
                             currentPhoneCode.startsWith(searchPattern) ||
-                            ('+'+currentPhoneCode).startsWith(searchPattern)
+                            ('+' + currentPhoneCode).startsWith(searchPattern)
                         ) {
                             $(value).removeClass('d-none');
                         } else {
@@ -2426,7 +2433,7 @@
         }
         return 0;
     }
-    
+
     $('[data-bs-toggle="phone"]').bsPhone();
 
 }(jQuery))
