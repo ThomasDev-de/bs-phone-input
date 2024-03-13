@@ -2169,8 +2169,6 @@
             return $input.closest('.' + wrapperClass);
         }
 
-        // const settings = $input.data('options');
-
         const inputGroup = $('<div>', {
             class: 'input-group ' + wrapperClass + ' ' + settings.inputGroupClasses
         }).insertAfter($input);
