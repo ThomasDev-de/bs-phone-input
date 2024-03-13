@@ -2164,12 +2164,12 @@
         inputGroup.find('.dropdown-toggle').html(html);
     }
 
-    function buildInputGroup($input) {
+    function buildInputGroup($input, settings) {
         if ($input.closest('.' + wrapperClass).length) {
             return $input.closest('.' + wrapperClass);
         }
 
-        const settings = $input.data('options');
+        // const settings = $input.data('options');
 
         const inputGroup = $('<div>', {
             class: 'input-group ' + wrapperClass + ' ' + settings.inputGroupClasses
@@ -2296,9 +2296,11 @@
                     setup = $.extend({}, $.bsPhone.getDefaults(), input.data(), optionsOrMethod || {});
                 }
                 input.data('options', setup);
-                const wrapper = buildInputGroup(input);
+                const wrapper = buildInputGroup(input, setup);
+
                 events(input);
                 setDropDownSelected(input);
+
                 input.data('initBsPhone', true);
 
                 if (valueBefore !== false) {
