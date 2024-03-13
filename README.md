@@ -25,11 +25,9 @@ via composer.json
 
 ```json
 {
-  ...
   "require": {
     "webcito/bs-phone-input": "dev-main"
   }
-  ...
 }
 ```
 
