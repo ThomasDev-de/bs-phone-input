@@ -2139,7 +2139,7 @@
         DEFAULTS: {
             default: 'de',
             limitedCountries: [],
-            wrapperClasses: 'mb-3',
+            inputGroupClasses: 'mb-3',
             dropDownClasses: 'btn btn-outline-secondary',
             dropDownMaxHeight: '50vh',
             inputClasses: 'border-secondary rounded-end',
@@ -2172,7 +2172,7 @@
         const settings = $input.data('options');
 
         const inputGroup = $('<div>', {
-            class: 'input-group ' + wrapperClass + ' ' + settings.wrapperClasses
+            class: 'input-group ' + wrapperClass + ' ' + settings.inputGroupClasses
         }).insertAfter($input);
 
         const dropDownButton = $('<button>', {
