@@ -19,6 +19,7 @@
         .phone-row:first-of-type { border-top: 0; }
         .status-pill { min-width: 104px; letter-spacing: .01em; }
         .value-box { min-height: 1.5rem; overflow-wrap: anywhere; }
+        .code-sample { border: 1px solid var(--demo-border); border-radius: .8rem; }
         .form-control { border-color: var(--demo-border); }
         .form-control:focus { border-color: #8297ef; box-shadow: 0 0 0 .25rem #3758d61a; }
         code { color: var(--demo-code); }
@@ -109,10 +110,57 @@
                     <code class="value-box small" id="value_5">—</code>
                 </div>
             </div>
+
+            <div class="phone-row pt-4">
+                <div class="form-floating">
+                    <input type="tel" class="form-control" id="input_6" data-bs-toggle="phone" data-default="de" placeholder=" " autocomplete="tel">
+                    <label for="input_6">Floating label example</label>
+                </div>
+                <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+                    <span class="badge rounded-pill status-pill text-bg-secondary" id="status_6" aria-live="polite">Enter a number</span>
+                    <span class="small text-secondary">Stored value</span>
+                    <code class="value-box small" id="value_6">—</code>
+                </div>
+            </div>
         </div>
         <footer class="card-footer bg-body-tertiary border-0 rounded-bottom-4 px-4 px-md-5 py-3">
             <span class="small text-secondary">A valid format matches the numbering plan. It does not confirm that the number is assigned or reachable.</span>
         </footer>
+    </section>
+
+    <section class="card demo-card mt-4">
+        <div class="card-body p-4 p-md-5">
+            <div class="d-flex align-items-start gap-3 mb-4">
+                <span class="brand-mark flex-shrink-0" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5h8M8 9h8M8 13h5"/><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/></svg>
+                </span>
+                <div>
+                    <h2 class="h4 mb-1">Set a number with JavaScript</h2>
+                    <p class="text-secondary small mb-0">The plugin validates and formats values set through its <code>val</code> method.</p>
+                </div>
+            </div>
+
+            <div class="row g-4 align-items-end">
+                <div class="col-lg-7">
+                    <label class="form-label fw-medium" for="phone_7">Programmatic value</label>
+                    <input type="tel" class="form-control" id="input_7" data-bs-toggle="phone" data-default="de" placeholder="Set a value with the buttons" autocomplete="tel">
+                    <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+                        <span class="badge rounded-pill status-pill text-bg-secondary" id="status_7" aria-live="polite">Enter a number</span>
+                        <span class="small text-secondary">Stored value</span>
+                        <code class="value-box small" id="value_7">—</code>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-success" type="button" id="setValidNumber">Set valid number</button>
+                        <button class="btn btn-outline-danger" type="button" id="setInvalidNumber">Set invalid number</button>
+                    </div>
+                    <div class="code-sample bg-body-tertiary p-3 mt-3">
+                        <code class="small">$('#input_7').bsPhone('val', '+4930123456')</code>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </main>
 <script src="../vendor/components/jquery/jquery.min.js"></script>
@@ -131,7 +179,9 @@
         const input = $(this);
         const id = input.attr('id').replace('input_', '');
         const visible = input.closest('.js-bs-phone-input').find('.js-temp-input');
+        const floatingLabel = input.closest('.js-bs-phone-input').find('.form-floating > label');
         visible.attr('id', 'phone_' + id);
+        if (floatingLabel.length) floatingLabel.attr('for', 'phone_' + id);
 
         function render(isValid, e164) {
             const status = $('#status_' + id);
@@ -153,6 +203,13 @@
             render(isValid, e164);
         });
         render(input.bsPhone('isValid'), input.val());
+    });
+
+    $('#setValidNumber').on('click', function () {
+        $('#input_7').bsPhone('val', '+4930123456');
+    });
+    $('#setInvalidNumber').on('click', function () {
+        $('#input_7').bsPhone('val', '+49123');
     });
 </script>
 </body>

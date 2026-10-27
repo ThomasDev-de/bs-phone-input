@@ -47,6 +47,15 @@ All inputs with the attribute `[data-bs-toggle="phone"]` are initialized automat
 
 The plugin bundles `libphonenumber-js` with full (`max`) numbering-plan metadata, so no extra phone-number script is needed. The original input contains the canonical E.164 value (for example, `+4930123456`) only while the visible value is valid. Invalid non-empty input blocks form submission and leaves the original value empty. Empty required inputs are checked by the visible field. The bundled library license is included in `dist/THIRD_PARTY_LICENSES.md`.
 
+Floating labels are supported when the phone input is a direct child of `.form-floating` and has a sibling `<label>`:
+
+```html
+<div class="form-floating">
+    <input type="tel" id="phone" placeholder=" " data-bs-toggle="phone">
+    <label for="phone">Phone number</label>
+</div>
+```
+
 Use `$('#example').bsPhone('isValid')` to check the current field. A `bsPhone:validityChange` event is emitted on each validation with `(event, isValid, e164Value)`.
 
 ## Options

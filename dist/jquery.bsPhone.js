@@ -1659,6 +1659,7 @@
 
     const wrapperClass = 'js-bs-phone-input';
     const helperInputClass = 'js-temp-input'
+    let generatedInputId = 0;
 
     function getSelectedCountry($input) {
         return $input.closest('.' + wrapperClass).find('.dropdown-item[data-selected="Y"]').data('isoCode');
@@ -1715,9 +1716,10 @@
             return $input.closest('.' + wrapperClass);
         }
 
+        const floating = $input.parent('.form-floating');
         const inputGroup = $('<div>', {
             class: 'input-group ' + wrapperClass + ' ' + settings.inputGroupClasses
-        }).insertAfter($input);
+        }).insertAfter(floating.length ? floating : $input);
 
         const dropDownButton = $('<button>', {
             class: 'dropdown-toggle ' + settings.dropDownClasses,
@@ -1783,7 +1785,24 @@
         const tmpInput = $('<input>', {
             type: 'tel', class: 'form-control ' + helperInputClass + ' ' + settings.inputClasses,
             autocomplete: 'tel'
-        }).appendTo(inputGroup);
+        });
+
+        if (floating.length) {
+            const label = floating.children('label').first();
+            const visibleId = ($input.attr('id') || `bs-phone-visible-${++generatedInputId}`) + '-visible';
+            tmpInput.attr({ id: visibleId, placeholder: ' ' }).addClass('rounded-start-0 flex-grow-1');
+            $input.removeClass('form-control');
+            inputGroup.append(floating);
+            floating.addClass('flex-grow-1').css('min-width', 0);
+            if (label.length) {
+                label.attr('for', visibleId);
+                tmpInput.insertBefore(label);
+            } else {
+                floating.append(tmpInput);
+            }
+        } else {
+            tmpInput.appendTo(inputGroup);
+        }
 
         if ($input.is('[required]')) tmpInput.prop('required', true);
 
