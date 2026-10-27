@@ -6,19 +6,22 @@
     <title>bsPhone · Phone number validation</title>
     <link href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root { --bs-primary: #3758d6; --bs-primary-rgb: 55, 88, 214; }
-        body { min-height: 100vh; color: #17233b; background: radial-gradient(ellipse at 15% 0, #e4edff 0, transparent 42%), linear-gradient(145deg, #f7f9fd, #eef3f8); }
+        :root { --bs-primary: #3758d6; --bs-primary-rgb: 55, 88, 214; --demo-ink: #17233b; --demo-border: #e1e7f0; --demo-divider: #e9edf3; --demo-code: #293e70; --demo-brand: #3758d6; --demo-shadow: #1b31501a; }
+        :root[data-bs-theme="dark"] { color-scheme: dark; --bs-primary: #91a5ff; --bs-primary-rgb: 145, 165, 255; --demo-ink: #e8edf8; --demo-border: #2d3a50; --demo-divider: #29364a; --demo-code: #c4d1ff; --demo-brand: #91a5ff; --demo-shadow: #0008; }
+        body { min-height: 100vh; color: var(--demo-ink); background: radial-gradient(ellipse at 15% 0, #e4edff 0, transparent 42%), linear-gradient(145deg, #f7f9fd, #eef3f8); transition: background .2s ease, color .2s ease; }
+        [data-bs-theme="dark"] body { background: radial-gradient(ellipse at 15% 0, #1d2b4a 0, transparent 42%), linear-gradient(145deg, #101827, #151e2e); }
         .demo-shell { max-width: 920px; }
         .hero { padding: 2.25rem 0 2rem; }
         .brand-mark { display: inline-grid; width: 2.6rem; height: 2.6rem; place-items: center; border-radius: .85rem; color: white; background: #3758d6; box-shadow: 0 .5rem 1rem #3758d640; }
-        .demo-card { border: 1px solid #e1e7f0; border-radius: 1.35rem; box-shadow: 0 1.25rem 3.5rem #1b31501a; overflow: hidden; }
-        .phone-row { border-top: 1px solid #e9edf3; }
+        [data-bs-theme="dark"] .brand-mark { color: #101827; background: #91a5ff; }
+        .demo-card { border: 1px solid var(--demo-border); border-radius: 1.35rem; box-shadow: 0 1.25rem 3.5rem var(--demo-shadow); overflow: hidden; }
+        .phone-row { border-top: 1px solid var(--demo-divider); }
         .phone-row:first-of-type { border-top: 0; }
         .status-pill { min-width: 104px; letter-spacing: .01em; }
         .value-box { min-height: 1.5rem; overflow-wrap: anywhere; }
-        .form-control { min-height: 3rem; border-color: #dce3ed; }
+        .form-control { border-color: var(--demo-border); }
         .form-control:focus { border-color: #8297ef; box-shadow: 0 0 0 .25rem #3758d61a; }
-        code { color: #293e70; }
+        code { color: var(--demo-code); }
         .eyebrow { letter-spacing: .12em; }
     </style>
 </head>
@@ -40,8 +43,9 @@
                 <h1 class="display-5 fw-semibold mb-3">Phone numbers, clearly validated.</h1>
                 <p class="text-secondary fs-5 mb-0">Choose a country and enter a number. See its validation state and the E.164 value stored by the plugin.</p>
             </div>
-            <div class="col-lg-4 text-lg-end">
-                <span class="badge rounded-pill bg-white border text-secondary px-3 py-2">jQuery <span class="mx-1">·</span> Bootstrap 5</span>
+            <div class="col-lg-4 d-flex flex-wrap align-items-center justify-content-lg-end gap-2">
+                <span class="badge rounded-pill bg-body border text-secondary px-3 py-2">jQuery <span class="mx-1">·</span> Bootstrap 5</span>
+                <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" id="themeToggle" type="button" aria-pressed="false">Use dark theme</button>
             </div>
         </div>
     </header>
@@ -85,6 +89,26 @@
                     <code class="value-box small" id="value_3">—</code>
                 </div>
             </div>
+
+            <div class="phone-row py-4">
+                <label class="form-label fw-medium" for="phone_4">Small input <span class="text-secondary fw-normal">· form-control-sm</span></label>
+                <input type="tel" class="form-control" id="input_4" data-bs-toggle="phone" data-default="de" data-input-group-classes="mb-3 input-group-sm" data-input-classes="border-secondary rounded-end form-control-sm" placeholder="Small size example" autocomplete="tel">
+                <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+                    <span class="badge rounded-pill status-pill text-bg-secondary" id="status_4" aria-live="polite">Enter a number</span>
+                    <span class="small text-secondary">Stored value</span>
+                    <code class="value-box small" id="value_4">—</code>
+                </div>
+            </div>
+
+            <div class="phone-row pt-4">
+                <label class="form-label fw-medium" for="phone_5">Large input <span class="text-secondary fw-normal">· form-control-lg</span></label>
+                <input type="tel" class="form-control" id="input_5" data-bs-toggle="phone" data-default="de" data-input-group-classes="mb-3 input-group-lg" data-input-classes="border-secondary rounded-end form-control-lg" placeholder="Large size example" autocomplete="tel">
+                <div class="d-flex flex-wrap align-items-center gap-2 mt-3">
+                    <span class="badge rounded-pill status-pill text-bg-secondary" id="status_5" aria-live="polite">Enter a number</span>
+                    <span class="small text-secondary">Stored value</span>
+                    <code class="value-box small" id="value_5">—</code>
+                </div>
+            </div>
         </div>
         <footer class="card-footer bg-body-tertiary border-0 rounded-bottom-4 px-4 px-md-5 py-3">
             <span class="small text-secondary">A valid format matches the numbering plan. It does not confirm that the number is assigned or reachable.</span>
@@ -95,6 +119,14 @@
 <script src="../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../dist/jquery.bsPhone.js"></script>
 <script>
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', function () {
+        const dark = document.documentElement.getAttribute('data-bs-theme') !== 'dark';
+        document.documentElement.setAttribute('data-bs-theme', dark ? 'dark' : 'light');
+        themeToggle.textContent = dark ? 'Use light theme' : 'Use dark theme';
+        themeToggle.setAttribute('aria-pressed', String(dark));
+    });
+
     $('[data-bs-toggle="phone"]').each(function () {
         const input = $(this);
         const id = input.attr('id').replace('input_', '');
