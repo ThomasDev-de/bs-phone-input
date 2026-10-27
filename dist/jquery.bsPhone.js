@@ -1748,16 +1748,16 @@
             }
             const activeClass = settings.default.toUpperCase() === el.isoCode.toUpperCase() ? 'Y' : 'N';
             // console.log(el)
-            const a = $('<a>', {
+            const a = $('<button>', {
                 class: 'dropdown-item d-flex align-items-center',
+                type: 'button',
                 html: `${el.isoCode} +(${el.phoneCode})`,
                 'data-iso-code': el.isoCode,
                 'data-selected': activeClass,
                 'data-phone-code': el.phoneCode,
                 'data-bs-toggle': 'tooltip',
                 'data-bs-placement': "end",
-                title: el.country,
-                href: '#'
+                title: el.country
             }).appendTo(menuContainer);
 
         });
@@ -1894,7 +1894,8 @@
             .on('shown.bs.dropdown', '.dropdown-toggle', function () {
                 wrapper.find('[type="search"]').val('').trigger('keyup').focus();
             })
-            .on('click', '.dropdown-item', function () {
+            .on('click', '.dropdown-item', function (e) {
+                e.preventDefault();
                 wrapper.find('.dropdown-item[data-selected="Y"]').attr('data-selected', 'N');
                 $(this).attr('data-selected', 'Y');
                 setDropDownSelected($input);
@@ -1918,6 +1919,9 @@
                 } else {
                     searchElements.removeClass('d-none');
                 }
+            })
+            .on('keydown', '[type="search"]', function (e) {
+                if (e.key === 'Enter') e.preventDefault();
             })
             .on('input', '.' + helperInputClass, function () {
                 const value = $(this).val();
