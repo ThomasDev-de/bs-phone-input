@@ -1936,6 +1936,7 @@
                 $(this).attr('data-selected', 'Y');
                 setDropDownSelected($input);
                 cleanValue($input);
+                wrapper.find('.' + helperInputClass).trigger('focus');
             })
             .on('keyup input', '[type="search"]', function () {
                 const searchPattern = $(this).val().trim();
