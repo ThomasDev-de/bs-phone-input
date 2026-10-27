@@ -1688,6 +1688,7 @@
             dropDownClasses: 'btn btn-outline-secondary',
             dropDownMaxHeight: '50vh',
             inputClasses: 'border-secondary rounded-end',
+            showFlags: true,
             formatValue(phoneCode, value = '') {
                 return value;
             },
@@ -1706,7 +1707,7 @@
         const inputGroup = $input.closest('.' + wrapperClass);
         let selected = inputGroup.find('.dropdown-item[data-selected="Y"]');
         const html = selected.html();
-        inputGroup.find('.dropdown-toggle').html(html);
+        inputGroup.find('.dropdown-toggle').html(html).attr('aria-label', selected.attr('aria-label'));
     }
 
     function buildInputGroup($input, settings) {
@@ -1751,7 +1752,7 @@
             const a = $('<button>', {
                 class: 'dropdown-item d-flex align-items-center',
                 type: 'button',
-                html: `${el.isoCode} +(${el.phoneCode})`,
+                html: `<span class="bs-phone-country-code">${el.isoCode}</span> <span class="ms-1">+(${el.phoneCode})</span>`,
                 'data-iso-code': el.isoCode,
                 'data-selected': activeClass,
                 'data-phone-code': el.phoneCode,
@@ -1759,6 +1760,22 @@
                 'data-bs-placement': "end",
                 title: el.country
             }).appendTo(menuContainer);
+
+            a.attr('aria-label', `${el.country} (+${el.phoneCode})`);
+            if (settings.showFlags) {
+                $('<img>', {
+                    class: 'bs-phone-flag me-2',
+                    src: `https://flagcdn.com/20x15/${el.isoCode.toLowerCase()}.png`,
+                    srcset: `https://flagcdn.com/40x30/${el.isoCode.toLowerCase()}.png 2x`,
+                    width: 20,
+                    height: 15,
+                    alt: '',
+                    'aria-hidden': 'true',
+                    loading: 'lazy'
+                }).prependTo(a).on('error', function () {
+                    $(this).remove();
+                });
+            }
 
         });
 
