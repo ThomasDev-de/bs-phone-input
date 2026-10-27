@@ -1971,7 +1971,6 @@
             })
     }
 
-
     function sortIsoCodes(a, b) {
         if (a.isoCode < b.isoCode) {
             return -1;
@@ -1983,5 +1982,4 @@
     }
 
     $('[data-bs-toggle="phone"]').bsPhone();
-
 }(jQuery))
