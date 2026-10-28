@@ -1820,6 +1820,8 @@
         const raw = helperInput.val() || '';
         const phone = parsePhone(raw, getSelectedCountry($input));
         $input.val(phone ? phone.number : '');
+        helperInput.toggleClass('is-valid', !!phone)
+            .toggleClass('is-invalid', !!raw && !phone);
         helperInput.attr('aria-invalid', raw && !phone ? 'true' : 'false');
         helperInput[0].setCustomValidity(raw && !phone ? 'Bitte gib eine gültige Telefonnummer ein.' : '');
         $input.trigger('bsPhone:validityChange', [!!phone, phone ? phone.number : '']);

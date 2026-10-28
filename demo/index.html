@@ -186,7 +186,6 @@
         function render(isValid, e164) {
             const status = $('#status_' + id);
             const value = $('#value_' + id);
-            visible.toggleClass('is-valid', isValid).toggleClass('is-invalid', !!visible.val() && !isValid);
             if (isValid) {
                 status.attr('class', 'badge rounded-pill status-pill text-bg-success').text('Valid');
                 value.text(e164);
